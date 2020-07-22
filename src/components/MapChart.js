@@ -6,6 +6,7 @@ const mapData = {};
 
 const handleClick = (e, countryCode) => {
   console.log(countryCode);
+  console.log("hello there");
 };
 
 const MapChart = () => {
@@ -14,10 +15,12 @@ const MapChart = () => {
       <VectorMap
         map={"world_mill"}
         backgroundColor="transparent" //change it to ocean blue: #0077be
-        zoomOnScroll={false}
+        zoomOnScroll={true}
         containerStyle={{
-          width: "100%",
-          height: "920px",
+          width: "auto",
+          height: "75vh",
+          marginTop: "-30px",
+          paddingTop: "100px",
         }}
         onRegionClick={handleClick} //gets the country code
         containerClassName="map"
@@ -35,7 +38,7 @@ const MapChart = () => {
             fill: "#2a8b26",
           },
           selected: {
-            fill: "#eeeeee", //color for the clicked country
+            fill: "#262626", //color for the clicked country
           },
           selectedHover: {
             fill: "#2a8b26",
