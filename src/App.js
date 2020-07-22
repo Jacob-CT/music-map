@@ -2,13 +2,16 @@ import React from "react";
 
 import "./styles.css";
 
-import MapChart from "./components/MapChart";
-import Player from "./components/Player";
+import MapMusicContainer from "./components/MapMusicContainer";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div>
-      <MapChart />
+      <Header />
+      <MapMusicContainer />
+      <Footer />
     </div>
   );
 }
