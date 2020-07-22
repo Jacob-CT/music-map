@@ -1,16 +1,8 @@
 import React from "react";
 import { VectorMap } from "react-jvectormap";
+import logo from "../images/katika-logo.png";
 
-const mapData = {
-  CN: 100000,
-  IN: 9900,
-  SA: 86,
-  EG: 70,
-  SE: 0,
-  FI: 0,
-  FR: 0,
-  US: 8000,
-};
+const mapData = {};
 
 const handleClick = (e, countryCode) => {
   console.log(countryCode);
@@ -40,13 +32,13 @@ const MapChart = () => {
           hover: {
             "fill-opacity": 0.8,
             cursor: "pointer",
-            fill: "#FEC500",
+            fill: "#2a8b26",
           },
           selected: {
-            fill: "	#000000", //color for the clicked country
+            fill: "#eeeeee", //color for the clicked country
           },
           selectedHover: {
-            fill: "#FEC500",
+            fill: "#2a8b26",
           },
         }}
         regionsSelectable={true}
