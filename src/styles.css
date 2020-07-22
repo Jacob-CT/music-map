@@ -6,7 +6,11 @@ html {
 body {
   margin: 0;
   padding: 0 1.5rem;
-  background-color: #03071e;
+  background-color: #0e0e0e;
+  background-image: url("./images/katika-logo.png");
+  background-repeat: no-repeat;
+  align-items: center;
+  background-position: center;
 }
 
 svg {
