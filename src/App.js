@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import ReactTooltip from "react-tooltip";
+import React from "react";
 
 import "./styles.css";
 
 import MapChart from "./components/MapChart";
+import Player from "./components/Player";
 
 function App() {
-  const [content, setContent] = useState("");
   return (
     <div>
-      <MapChart setTooltipContent={setContent} />
-      <ReactTooltip>{content}</ReactTooltip>
+      <MapChart />
     </div>
   );
 }

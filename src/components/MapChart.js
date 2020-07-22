@@ -1,100 +1,67 @@
-import React, { memo, useEffect, useState } from "react";
-import { csv } from "d3-fetch";
-import { scaleLinear } from "d3-scale";
-import {
-  ZoomableGroup,
-  ComposableMap,
-  Geographies,
-  Geography,
-  Sphere,
-  Graticule,
-} from "react-simple-maps";
+import React from "react";
+import { VectorMap } from "react-jvectormap";
 
-const geoUrl =
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-
-const rounded = (num) => {
-  if (num > 1000000000) {
-    return Math.round(num / 100000000) / 10 + "Bn";
-  } else if (num > 1000000) {
-    return Math.round(num / 100000) / 10 + "M";
-  } else {
-    return Math.round(num / 100) / 10 + "K";
-  }
+const mapData = {
+  CN: 100000,
+  IN: 9900,
+  SA: 86,
+  EG: 70,
+  SE: 0,
+  FI: 0,
+  FR: 0,
+  US: 8000,
 };
 
-const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
-  .range(["#03041e", "#d00000"]);
+const handleClick = (e, countryCode) => {
+  console.log(countryCode);
+};
 
-function handleClick(e) {
-  console.log("that tickles");
-}
-
-const MapChart = ({ setTooltipContent }) => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    csv(`/vulnerability.csv`).then((data) => {
-      setData(data);
-    });
-  }, []);
-
+const MapChart = () => {
   return (
-    <>
-      <ComposableMap
-        data-tip=''
-        projectionConfig={{
-          rotate: [-10, 0, 0],
-          scale: 200,
+    <div>
+      <VectorMap
+        map={"world_mill"}
+        backgroundColor="transparent" //change it to ocean blue: #0077be
+        zoomOnScroll={false}
+        containerStyle={{
+          width: "100%",
+          height: "920px",
         }}
-      >
-        <ZoomableGroup>
-          <Sphere stroke='#E4E5E6' strokeWidth={0.5} />
-          <Graticule stroke='#E4E5E6' strokeWidth={0.5} />
-          {data.length > 0 && (
-            <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const d = data.find((s) => s.ISO3 === geo.properties.ISO_A3);
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      onMouseEnter={() => {
-                        const { NAME, POP_EST } = geo.properties;
-                        setTooltipContent(`${NAME} — ${rounded(POP_EST)}`);
-                      }}
-                      onMouseLeave={() => {
-                        setTooltipContent("");
-                      }}
-                      // onClick={() => {
-                      //
-                      // }}
-                      style={{
-                        default: {
-                          fill: d ? colorScale(d["2017"]) : "#4a4e69",
-                          outline: "none",
-                        },
-                        hover: {
-                          fill: "#d00000",
-                          outline: "none",
-                        },
-                        pressed: {
-                          fill: "#ffba08",
-                          outline: "none",
-                        },
-                      }}
-                    />
-                  );
-                })
-              }
-            </Geographies>
-          )}
-        </ZoomableGroup>
-      </ComposableMap>
-    </>
+        onRegionClick={handleClick} //gets the country code
+        containerClassName="map"
+        regionStyle={{
+          initial: {
+            fill: "#AE0D0D",
+            "fill-opacity": 0.9,
+            stroke: "none",
+            "stroke-width": 0,
+            "stroke-opacity": 0,
+          },
+          hover: {
+            "fill-opacity": 0.8,
+            cursor: "pointer",
+            fill: "#FEC500",
+          },
+          selected: {
+            fill: "	#000000", //color for the clicked country
+          },
+          selectedHover: {
+            fill: "#FEC500",
+          },
+        }}
+        regionsSelectable={true}
+        series={{
+          regions: [
+            {
+              values: mapData, //this is your data
+              scale: ["#146804", "#ff0000"], //your color game's here
+              normalizeFunction: "polynomial",
+            },
+          ],
+        }}
+      />
+    </div>
   );
 };
 
-export default memo(MapChart);
+export default MapChart;

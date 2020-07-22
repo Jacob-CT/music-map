@@ -13,3 +13,11 @@ svg {
   display: inline-block;
   vertical-align: middle;
 }
+
+.player-container {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  z-index: 10;
+}
